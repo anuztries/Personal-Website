@@ -127,4 +127,47 @@ body {
     position: relative;
   }
 
+  /* Focus Corner / Target Lock Effect - Pure CSS */
+  .target-lock {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .target-lock::before,
+  .target-lock::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--accent-color, #00ff9d);
+    border-style: solid;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Top-Left Corner */
+  .target-lock::before {
+    top: -4px;
+    left: -4px;
+    border-width: 2px 0 0 2px;
+    transform: scale(0.5) translate(-10px, -10px);
+  }
+
+  /* Bottom-Right Corner */
+  .target-lock::after {
+    bottom: -4px;
+    right: -4px;
+    border-width: 0 2px 2px 0;
+    transform: scale(0.5) translate(10px, 10px);
+  }
+
+  /* Hover State */
+  .target-lock:hover::before,
+  .target-lock:hover::after {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+    filter: drop-shadow(0 0 4px var(--accent-color, #00ff9d));
+  }
 }
