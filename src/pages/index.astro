@@ -1,6 +1,5 @@
 ---
 import ProjectCard from "../components/ProjectCard.astro";
-import FocusCroners from "../components/FocusCroners.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -28,54 +27,44 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
         <!-- Social Links -->
         <div class="flex flex-row gap-3">
-          <FocusCroners>
-            <a
-              href="https://linkedin.com/in/yourprofile"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [LinkedIn]
-            </a>
-          </FocusCroners>
-          <FocusCroners>
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [GitHub]
-            </a>
-          </FocusCroners>
-          <FocusCroners>
-            <a
-              href="https://instagram.com/yourprofile"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [Instagram]
-            </a>
-          </FocusCroners>
+          <a
+            href="https://linkedin.com/in/yourprofile"
+            target="_blank"
+            class="target-lock crosshair-mask link-button"
+          >
+            [LinkedIn]
+          </a>
+          <a
+            href="https://github.com/yourusername"
+            target="_blank"
+            class="target-lock crosshair-mask link-button"
+          >
+            [GitHub]
+          </a>
+          <a
+            href="https://instagram.com/yourprofile"
+            target="_blank"
+            class="target-lock crosshair-mask link-button"
+          >
+            [Instagram]
+          </a>
           <!-- Resume Link -->
-          <FocusCroners>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [Resume]
-            </a>
-          </FocusCroners>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            class="target-lock crosshair-mask link-button"
+          >
+            [Resume]
+          </a>
         </div>
       </div>
 
       <!-- Right: Profile Photo -->
-      <FocusCroners>
-        <img
-          src="/profilepic.jpg"
-          alt="Anuj Khatri"
-          class="hover-above-crosshair w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
-        />
-      </FocusCroners>
+      <img
+        src="/profilepic.jpg"
+        alt="Anuj Khatri"
+        class="target-lock hover-above-crosshair w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
+      />
     </section>
 
     <!-- Divider -->
