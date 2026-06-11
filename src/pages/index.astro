@@ -33,6 +33,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             class="focus-corners crosshair-mask link-button"
           >
             [LinkedIn]
+            <span class="corner-bl"></span>
+            <span class="corner-br"></span>
           </a>
           <a
             href="https://github.com/yourusername"
@@ -40,6 +42,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             class="focus-corners crosshair-mask link-button"
           >
             [GitHub]
+            <span class="corner-bl"></span>
+            <span class="corner-br"></span>
           </a>
           <a
             href="https://instagram.com/yourprofile"
@@ -47,6 +51,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             class="focus-corners crosshair-mask link-button"
           >
             [Instagram]
+            <span class="corner-bl"></span>
+            <span class="corner-br"></span>
           </a>
           <!-- Resume Link -->
           <a
@@ -55,17 +61,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             class="focus-corners crosshair-mask link-button"
           >
             [Resume]
+            <span class="corner-bl"></span>
+            <span class="corner-br"></span>
           </a>
         </div>
       </div>
 
       <!-- Right: Profile Photo -->
-      <div class="shrink-0">
+      <div class="shrink-0 focus-corners">
         <img
           src="/profilepic.jpg"
           alt="Anuj Khatri"
-          class="hover-above-crosshair focus-corners w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
+          class="hover-above-crosshair w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
         />
+        <span class="corner-bl"></span>
+        <span class="corner-br"></span>
       </div>
     </section>
 
