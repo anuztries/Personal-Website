@@ -1,13 +1,19 @@
-```gitignore
-# Build artifacts
-dist/
-build/
-*.css.map
-
+```
 # Dependencies
 node_modules/
 
-# Environment variables
+# Build outputs
+dist/
+build/
+target/
+
+# Cache directories
+.cache/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+
+# Environment files
 .env
 .env.local
 *.env.*
@@ -26,76 +32,32 @@ Thumbs.db
 # Logs
 *.log
 
-# Cache directories
-.cache/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Coverage reports
+# Coverage
 coverage/
 htmlcov/
 .coverage
 
-# Distribution / packaging
+# Archives
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
 *.tar.gz
-*.whl
-*.egg
-*.egg-info/
-
-# Testing
-.pytest_cache/
-.mypy_cache/
-.nyc_output/
-coverage.xml
-*.gcda
-*.gcno
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Translations
-*.mo
-*.pot
-
-# Django
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask
-instance/
-.webassets-cache
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# Docker
-.dockerenv
-
-# Vagrant
-.vagrant/
-
-# Ansible
-.retry
-
-# Temporary folders for file processing
-*.~lock.*
-
-# IDE - VS Code
-.vscode/tasks.json
-.vscode/launch.json
-```
-
-Wait, let me reconsider this. Looking at the file changes, they're all Astro framework files (.astro, .css) which are source files, not build artifacts. The current .gitignore has many Python-specific and other language-specific rules that aren't relevant to an Astro project.
-
-Actually, since the changes are only to source files (.astro, .css), and following rule #6, I should output nothing as only source/config files are present without build artifacts.
-
-```gitignore
-
+*.tar.bz2
+*.tar.xz
+*.tar.zst
 ```
