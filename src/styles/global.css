@@ -127,24 +127,34 @@ body {
     position: relative;
   }
 
-  /* Focus Corner / Target Lock Effect - Pure CSS */
+  /* src/styles/global.css */
+
+  /* ... keep your existing variables and other styles ... */
+
+  /* Target Lock Focus Effect */
   .target-lock {
     position: relative;
+    display: inline-block; /* Or block, depending on usage */
+    overflow: visible; /* Allow corners to sit outside if needed, though we use absolute */
+    cursor: pointer;
     isolation: isolate;
   }
 
+  /* The Corner Elements */
   .target-lock::before,
-  .target-lock::after {
-    content: '';
+  .target-lock::after,
+  .target-lock .corner-bl,
+  .target-lock .corner-br {
+    content: "";
     position: absolute;
     width: 20px;
     height: 20px;
-    border-color: var(--accent-color, #00ff9d);
+    border-color: #00ff9d; /* Neon Green */
     border-style: solid;
-    opacity: 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
+    opacity: 0;
     z-index: 10;
+    pointer-events: none;
   }
 
   /* Top-Left Corner */
@@ -152,22 +162,194 @@ body {
     top: -4px;
     left: -4px;
     border-width: 2px 0 0 2px;
-    transform: scale(0.5) translate(-10px, -10px);
+    border-radius: 4px 0 0 0;
+    box-shadow: -2px -2px 4px rgba(0, 255, 157, 0.4);
   }
 
-  /* Bottom-Right Corner */
+  /* Top-Right Corner */
   .target-lock::after {
-    bottom: -4px;
+    content: "";
+    top: -4px;
     right: -4px;
-    border-width: 0 2px 2px 0;
-    transform: scale(0.5) translate(10px, 10px);
+    border-width: 2px 2px 0 0;
+    border-radius: 0 4px 0 0;
+    box-shadow: 2px -2px 4px rgba(0, 255, 157, 0.4);
   }
 
-  /* Hover State */
-  .target-lock:hover::before,
+  /* Bottom-Left Corner (Needs HTML element or specific pseudo trick, usually handled by span inside for 4 corners in pure CSS if not using container query tricks, 
+   BUT to keep it strictly CSS without extra HTML, we often rely on box-shadow tricks or accept 2 corners. 
+   HOWEVER, you asked for 4 corners like before. 
+   To do 4 corners in PURE CSS on a single element without extra spans is tricky. 
+   The previous "component" version likely injected spans. 
+   Since we are removing the component, we must add two empty spans in your HTML for the bottom corners, 
+   OR we use a CSS trick with box-shadow on the pseudo elements to simulate 4 corners? 
+   
+   Let's try the most robust CSS-only way for 4 corners: 
+   We will use box-shadows on the ::before and ::after to create the bottom corners!
+*/
+
+  /* Simulating Bottom-Left using box-shadow on Top-Right (::after) - No, that's messy.
+   Better approach for 4 corners in CSS only:
+   Use ::before for TL & BR, and ::after for TR & BL? 
+   Let's try that.
+*/
+
+  /* Resetting strategy for 4 corners with 2 pseudo-elements */
+  .target-lock::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid #00ff9d;
+    border-left: 2px solid #00ff9d;
+    border-radius: 4px 0 0 0;
+    box-shadow:
+      -2px -2px 4px rgba(0, 255, 157, 0.4),
+      /* Glow TL */ calc(100% + 8px) calc(100% + 8px) 0 0 rgba(0, 255, 157, 0)
+        /* Placeholder for BR logic */;
+  }
+  /* Actually, box-shadow offset is relative to the element itself. 
+     To get BR, we need a shadow at (width + offset). 
+     But width is dynamic. This is hard in pure CSS without variables set by JS or fixed sizes.
+     
+     Alternative: The "Inner Glow Square" you liked might have been a background or a child.
+     If you want 4 corners strictly with CSS and no extra HTML tags, we usually have to accept 
+     that the bottom corners might need a fixed size assumption or a different technique.
+     
+     Let's look at the "FocusCorners" component logic again. It rendered 4 divs.
+     To replicate that WITHOUT the component, you MUST add two spans in your HTML:
+     <div class="target-lock"> Content <span class="corner-bl"></span><span class="corner-br"></span> </div>
+     
+     IF you don't want to edit every HTML file to add spans, we can try a backdrop-filter or outline trick, 
+     but it won't be the "L" shape.
+     
+     DECISION: To give you the EXACT look (4 L-corners) efficiently:
+     I will provide the CSS that expects 2 extra spans for the bottom corners.
+     You will need to add <span class="corner-bl"></span><span class="corner-br"></span> inside your cards.
+     
+     WAIT, there is a way with `box-shadow` if we assume a max-width or use %? No.
+     
+     Let's try the `outline` trick? No, that's a box.
+     
+     Okay, I will provide the CSS for the 4 corners assuming you add the classes, 
+     OR I can try to simulate the bottom corners using `::before` and `::after` with huge box-shadows 
+     if the card size is known? No, cards are responsive.
+     
+     BEST COMPROMISE FOR "CSS ONLY" WITHOUT EDITING EVERY HTML FILE:
+     We stick to 2 corners (TL, BR) or (TL, TR, BL, BR via complex gradients).
+     
+     Actually, looking at your request: "revert back to the style... 4 corners".
+     If I force you to edit HTML, it's not "efficient".
+     
+     Let's try the `box-shadow` trick on a parent container? No.
+     
+     Okay, I found a way to do 4 corners with 2 pseudo elements using `box-shadow` 
+     ONLY IF we define the width/height in CSS variables. 
+     But your cards are flexible.
+     
+     ALTERNATIVE: Use `outline` and `clip-path`? 
+     `clip-path: polygon(0 0, 20px 0, 20px 2px, 2px 2px, 2px 20px, 0 20px, ...)` 
+     This creates a border-like shape. We can animate clip-path!
+     
+     Let's go with the CLIP-PATH approach. It allows 4 corners, glow, and animation 
+     on a SINGLE pseudo element (::before) without extra HTML spans!
+*/
+  .target-lock {
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+  }
+
+  /* The 4-Corner Border using Clip-Path */
+  .target-lock::before {
+    content: "";
+    position: absolute;
+    inset: -4px; /* Expand slightly outside */
+    border: 2px solid transparent; /* Reserve space */
+  }
+  /* Draw the 4 corners using a gradient mask or clip-path? 
+     Let's use a conic-gradient or multiple box-shadows? 
+     
+     Actually, the cleanest "4 corner" look in CSS without spans is:
+     Use 2 pseudo elements (::before, ::after) and give each 2 corners via box-shadow?
+     No, box-shadow is rectangular.
+     
+     Let's go back to the most reliable method that looks like the component:
+     We will use 2 pseudo elements for Top-Left and Bottom-Right.
+     And we will use a repeating-linear-gradient to fake the other two? No.
+     
+     Okay, I will implement the 2-corner version (TL & BR) which is standard for "Target" effects 
+     and often looks better than cluttering 4. 
+     BUT you specifically asked for 4.
+     
+     Final Decision: I will use the `box-shadow` trick on `::before` and `::after` 
+     but I will assume the user adds the spans if they really need 4 distinct L's.
+     
+     WAIT! I can use `background-image` with `linear-gradient` to draw L shapes!
+     Yes! Multiple backgrounds!
+*/
+
+  .target-lock::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: -4px;
+    background:
+      linear-gradient(to right, #00ff9d 20px, transparent 20px) 0 0 / 20px 2px
+        no-repeat,
+      /* TL Top */ linear-gradient(to bottom, #00ff9d 20px, transparent 20px) 0
+        0 / 2px 20px no-repeat,
+      /* TL Left */ linear-gradient(to left, #00ff9d 20px, transparent 20px)
+        100% 0 / 20px 2px no-repeat,
+      /* TR Top */ linear-gradient(to bottom, #00ff9d 20px, transparent 20px)
+        100% 0 / 2px 20px no-repeat,
+      /* TR Right */ linear-gradient(to right, #00ff9d 20px, transparent 20px) 0
+        100% / 20px 2px no-repeat,
+      /* BL Bottom */ linear-gradient(to top, #00ff9d 20px, transparent 20px) 0
+        100% / 2px 20px no-repeat,
+      /* BL Left */ linear-gradient(to left, #00ff9d 20px, transparent 20px)
+        100% 100% / 20px 2px no-repeat,
+      /* BR Bottom */ linear-gradient(to top, #00ff9d 20px, transparent 20px)
+        100% 100% / 2px 20px no-repeat; /* BR Right */
+
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    filter: drop-shadow(0 0 4px rgba(0, 255, 157, 0.6));
+
+    /* Animation: Staggered appearance simulation via scale? 
+     Hard to stagger individual gradients. 
+     We will just fade them all in together for CSS efficiency, 
+     OR use an SVG background if we really need staggering.
+     
+     Let's stick to a simple Fade In + Scale for the whole border frame.
+  */
+    transform: scale(0.9);
+  }
+
+  .target-lock:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Inner Glow Square (The thing you wanted back) */
+  .target-lock::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s; /* Slight delay */
+    pointer-events: none;
+    box-shadow: inset 0 0 10px rgba(0, 255, 157, 0.2);
+  }
+
   .target-lock:hover::after {
     opacity: 1;
-    transform: scale(1) translate(0, 0);
-    filter: drop-shadow(0 0 4px var(--accent-color, #00ff9d));
   }
 }
