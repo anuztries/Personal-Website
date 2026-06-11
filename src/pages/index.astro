@@ -1,6 +1,7 @@
 ---
 import ProjectCard from "../components/ProjectCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Focus from "../components/Focus.astro";
 ---
 
 <BaseLayout>
@@ -27,44 +28,54 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
         <!-- Social Links -->
         <div class="flex flex-row gap-3">
-          <a
-            href="https://linkedin.com/in/yourprofile"
-            target="_blank"
-            class="target-lock crosshair-mask link-button"
-          >
-            [LinkedIn]
-          </a>
-          <a
-            href="https://github.com/yourusername"
-            target="_blank"
-            class="target-lock crosshair-mask link-button"
-          >
-            [GitHub]
-          </a>
-          <a
-            href="https://instagram.com/yourprofile"
-            target="_blank"
-            class="target-lock crosshair-mask link-button"
-          >
-            [Instagram]
-          </a>
+          <Focus color="#22c55e" size="16">
+            <a
+              href="https://linkedin.com/in/yourprofile"
+              target="_blank"
+              class="link-button"
+            >
+              [LinkedIn]
+            </a>
+          </Focus>
+          <Focus color="#22c55e" size="16">
+            <a
+              href="https://github.com/yourusername"
+              target="_blank"
+              class="link-button"
+            >
+              [GitHub]
+            </a>
+          </Focus>
+          <Focus color="#22c55e" size="16">
+            <a
+              href="https://instagram.com/yourprofile"
+              target="_blank"
+              class="link-button"
+            >
+              [Instagram]
+            </a>
+          </Focus>
           <!-- Resume Link -->
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            class="target-lock crosshair-mask link-button"
-          >
-            [Resume]
-          </a>
+          <Focus color="#22c55e" size="16">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              class="link-button"
+            >
+              [Resume]
+            </a>
+          </Focus>
         </div>
       </div>
 
       <!-- Right: Profile Photo -->
-      <img
-        src="/profilepic.jpg"
-        alt="Anuj Khatri"
-        class="target-lock hover-above-crosshair w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
-      />
+      <Focus color="#22c55e" size="20">
+        <img
+          src="/profilepic.jpg"
+          alt="Anuj Khatri"
+          class="hover-above-crosshair w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
+        />
+      </Focus>
     </section>
 
     <!-- Divider -->
