@@ -1,0 +1,66 @@
+---
+const { class: className = "" } = Astro.props;
+---
+
+<div class={"focus-corners-wrapper " + className}>
+  <div class="focus-corners-inner">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .focus-corners-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Top-left and top-right corners on outer wrapper */
+  .focus-corners-wrapper::before,
+  .focus-corners-wrapper::after,
+  .focus-corners-inner::before,
+  .focus-corners-inner::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    z-index: 10000;
+  }
+
+  .focus-corners-wrapper::before {
+    top: -4px;
+    left: -4px;
+    border-top: 2px solid #2563eb;
+    border-left: 2px solid #2563eb;
+  }
+
+  .focus-corners-wrapper::after {
+    top: -4px;
+    right: -4px;
+    border-top: 2px solid #2563eb;
+    border-right: 2px solid #2563eb;
+  }
+
+  .focus-corners-inner::before {
+    bottom: -4px;
+    left: -4px;
+    border-bottom: 2px solid #2563eb;
+    border-left: 2px solid #2563eb;
+  }
+
+  .focus-corners-inner::after {
+    bottom: -4px;
+    right: -4px;
+    border-bottom: 2px solid #2563eb;
+    border-right: 2px solid #2563eb;
+  }
+
+  .focus-corners-wrapper:hover::before,
+  .focus-corners-wrapper:hover::after,
+  .focus-corners-wrapper:hover .focus-corners-inner::before,
+  .focus-corners-wrapper:hover .focus-corners-inner::after {
+    opacity: 1;
+  }
+</style>

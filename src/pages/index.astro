@@ -1,0 +1,160 @@
+---
+import ProjectCard from "../components/ProjectCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <div class="min-h-screen flex flex-col gap-16 py-12 px-8">
+    <!-- Hero Section -->
+    <section class="flex flex-row items-start justify-between gap-8">
+      <!-- Left: Name + Bio + Socials -->
+      <div class="flex flex-col gap-6 max-w-lg">
+        <h1 class="text-7xl font-bold leading-none tracking-tighter">
+          ANUJ<br />KHATRI
+        </h1>
+
+        <div class="flex flex-col gap-1">
+          <p class="text-lg">Hello World!</p>
+          <p class="text-base text-gray-600">
+            I'm Anuj. Welcome to my website.
+          </p>
+          <p class="text-base text-gray-600">
+            <!-- TODO: Add your short bio here -->
+            Engineering student and maker. I build things with code, circuits, and
+            whatever I can find.
+          </p>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex flex-row gap-3">
+          <a
+            href="https://linkedin.com/in/yourprofile"
+            target="_blank"
+            class="focus-corners crosshair-mask link-button"
+          >
+            [LinkedIn]
+          </a>
+          <a
+            href="https://github.com/yourusername"
+            target="_blank"
+            class="focus-corners crosshair-mask link-button"
+          >
+            [GitHub]
+          </a>
+          <a
+            href="https://instagram.com/yourprofile"
+            target="_blank"
+            class="focus-corners crosshair-mask link-button"
+          >
+            [Instagram]
+          </a>
+          <!-- Resume Link -->
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            class="focus-corners crosshair-mask link-button"
+          >
+            [Resume]
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Profile Photo -->
+      <div class="shrink-0">
+        <img
+          src="/profilepic.jpg"
+          alt="Anuj Khatri"
+          class="hover-above-crosshair focus-corners w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
+        />
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <hr class="border-gray-300" />
+
+    <!-- Recent Projects Section -->
+    <section class="flex flex-col gap-6">
+      <h2 class="font-mono font-medium tracking-tight">/Recent Projects</h2>
+
+      <div class="grid grid-cols-3 gap-4">
+        <!-- Project Card placeholder — repeat this block per project -->
+        <div
+          class="border border-gray-300 rounded-lg overflow-hidden hover:border-gray-500 transition-colors cursor-pointer"
+        >
+          <!-- Thumbnail -->
+          <div
+            class="w-full aspect-video bg-gray-200 flex items-center justify-center"
+          >
+            <span class="font-mono text-xs text-gray-400">[ thumbnail ]</span>
+          </div>
+          <!-- Card Info -->
+          <div class="p-3 flex flex-col gap-1">
+            <span class="font-mono font-medium text-sm">Project Name</span>
+            <span class="font-sans text-xs text-gray-500"
+              >Short description of the project goes here.</span
+            >
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <ProjectCard />
+
+        <!-- Card 3 -->
+        <ProjectCard />
+      </div>
+
+      <a
+        href="/projects"
+        class="font-mono text-sm w-fit border-b border-gray-400 hover:border-black transition-colors"
+      >
+        [View all projects →]
+      </a>
+    </section>
+
+    <!-- Divider -->
+    <hr class="border-gray-300" />
+
+    <!-- Recent Blog Posts Section -->
+    <section class="flex flex-col gap-6">
+      <h2 class="font-mono font-medium tracking-tight">/Recent Writings</h2>
+
+      <div class="flex flex-col gap-3">
+        <!-- Blog post row placeholder — repeat per post -->
+        <div
+          class="flex flex-row items-baseline justify-between border-b border-gray-200 pb-3"
+        >
+          <a
+            href="/blog/post-slug"
+            class="font-mono text-sm hover:text-blue-600 transition-colors"
+          >
+            Post Title Goes Here
+          </a>
+          <span class="font-mono text-xs text-gray-400 shrink-0 ml-4"
+            >Jun 10, 2026</span
+          >
+        </div>
+
+        <div
+          class="flex flex-row items-baseline justify-between border-b border-gray-200 pb-3"
+        >
+          <a
+            href="/blog/post-slug"
+            class="font-mono text-sm hover:text-blue-600 transition-colors"
+          >
+            Another Post Title
+          </a>
+          <span class="font-mono text-xs text-gray-400 shrink-0 ml-4"
+            >May 28, 2026</span
+          >
+        </div>
+      </div>
+
+      <a
+        href="/writing"
+        class="crosshair-mask font-mono text-sm w-fit border-b border-gray-400 hover:border-black transition-colors"
+      >
+        [View all posts →]
+      </a>
+    </section>
+  </div>
+</BaseLayout>

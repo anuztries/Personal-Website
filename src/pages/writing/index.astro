@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog");
+
+const posts = allPosts
+  .filter(function (post) {
+    return !post.data.draft;
+  })
+  .sort(function (a, b) {
+    return b.data.date.getTime() - a.data.date.getTime();
+  });
+---
+
+<BaseLayout>
+  <div class="max-w-2xl mx-auto py-12 px-8 flex flex-col gap-10">
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4">
+      <h1 class="font-mono font-bold text-4xl tracking-tight">My Writing</h1>
+      <p class="font-sans text-base text-gray-600 leading-relaxed">
+        I can't quite call it a blog due to no expectation of frequency, but
+        sometimes I write things, and sometimes I do a good job. You may find
+        enjoyment in one of these posts.
+        <br />
+        <span class="text-gray-400">— Anuj</span>
+      </p>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="flex flex-col gap-3">
+      <p class="font-mono text-sm text-gray-500">
+        Sign up to be notified when I write stuff:
+      </p>
+      <div class="flex flex-row gap-2">
+        <input
+          type="email"
+          placeholder="your@email.com"
+          class="font-sans text-sm border border-gray-300 rounded px-3 py-2 flex-1 bg-white focus:outline-none focus:border-gray-500 transition-colors"
+        />
+        <button
+          class="font-mono text-sm border border-gray-300 bg-gray-100 px-4 py-2 rounded hover:bg-gray-200 hover:border-gray-500 transition-colors"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="border-gray-200" />
+
+    <!-- Posts List -->
+    <div class="flex flex-col gap-4">
+      {
+        posts.length === 0 && (
+          <p class="font-mono text-sm text-gray-400">[ no posts yet ]</p>
+        )
+      }
+
+      {
+        posts.map(function (post) {
+          return (
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              date={post.data.date}
+              url={"/writing/" + post.id}
+            />
+          );
+        })
+      }
+    </div>
+
+    <!-- Back link -->
+    <a
+      href="/"
+      class="font-mono text-sm text-gray-400 hover:text-black transition-colors w-fit"
+    >
+      ← back to homepage
+    </a>
+  </div>
+</BaseLayout>

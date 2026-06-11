@@ -1,0 +1,10 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  // TurnOff Typescript Complaints because this uses plain javascript:
+  "compilerOptions": {
+    "strictNullChecks": false,
+    "noImplicitAny": false
+  }
+}
