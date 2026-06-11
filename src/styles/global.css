@@ -123,49 +123,8 @@ body {
     z-index: 20;
   }
 
-  .focus-corners {
+  .crosshair-mask {
     position: relative;
   }
 
-  .focus-corners::before {
-    content: "";
-    position: absolute;
-    inset: -5px;
-    pointer-events: none;
-    opacity: 0;
-    z-index: 1;
-    transition: opacity 0.2s ease;
-    background-image:
-      linear-gradient(to right, #2563eb 10px, transparent 10px),
-      linear-gradient(to bottom, #2563eb 10px, transparent 10px),
-      linear-gradient(to left, #2563eb 10px, transparent 10px),
-      linear-gradient(to bottom, #2563eb 10px, transparent 10px),
-      linear-gradient(to right, #2563eb 10px, transparent 10px),
-      linear-gradient(to top, #2563eb 10px, transparent 10px),
-      linear-gradient(to left, #2563eb 10px, transparent 10px),
-      linear-gradient(to top, #2563eb 10px, transparent 10px);
-    background-size:
-      12px 2px,
-      2px 12px,
-      12px 2px,
-      2px 12px,
-      12px 2px,
-      2px 12px,
-      12px 2px,
-      2px 12px;
-    background-position:
-      top left,
-      top left,
-      top right,
-      top right,
-      bottom left,
-      bottom left,
-      bottom right,
-      bottom right;
-    background-repeat: no-repeat;
-  }
-
-  .focus-corners:hover::before {
-    opacity: 1;
-  }
 }

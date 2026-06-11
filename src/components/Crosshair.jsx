@@ -1,27 +1,38 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Crosshair() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
-  const [masks, setMasks] = useState([]);
+  const [hoveredMask, setHoveredMask] = useState(null);
 
   useEffect(() => {
-    const updateMasks = () => {
-      const elements = document.querySelectorAll(".crosshair-mask");
-      const rects = Array.from(elements).map((el) =>
-        el.getBoundingClientRect(),
-      );
-      setMasks(rects);
-    };
-
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
-      updateMasks();
+
+      // Find which mask (if any) is directly under the cursor
+      const elements = document.querySelectorAll(".crosshair-mask");
+      let foundMask = null;
+
+      for (const el of elements) {
+        const rect = el.getBoundingClientRect();
+        if (
+          e.clientX >= rect.left &&
+          e.clientX <= rect.right &&
+          e.clientY >= rect.top &&
+          e.clientY <= rect.bottom
+        ) {
+          foundMask = rect;
+          break;
+        }
+      }
+
+      setHoveredMask(foundMask);
     };
 
     const handleMouseLeave = () => {
       setIsVisible(false);
+      setHoveredMask(null);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -35,10 +46,10 @@ export default function Crosshair() {
 
   if (!isVisible) return null;
 
-  // Build horizontal line segments: skip any mask whose vertical span contains mousePos.y
-  const hSegments = buildHorizontalSegments(mousePos, masks);
-  // Build vertical line segments: skip any mask whose horizontal span contains mousePos.x
-  const vSegments = buildVerticalSegments(mousePos, masks);
+  // Build horizontal line segments: only skip the hovered mask
+  const hSegments = buildHorizontalSegments(mousePos, hoveredMask);
+  // Build vertical line segments: only skip the hovered mask
+  const vSegments = buildVerticalSegments(mousePos, hoveredMask);
 
   return (
     <>
@@ -78,74 +89,50 @@ export default function Crosshair() {
   );
 }
 
-function buildHorizontalSegments(mousePos, masks) {
+function buildHorizontalSegments(mousePos, hoveredMask) {
   const viewportWidth = window.innerWidth;
 
-  // Find masks that block the horizontal line (their vertical range contains mousePos.y)
-  const blocking = masks.filter(
-    (r) => mousePos.y >= r.top && mousePos.y <= r.bottom,
-  );
-
-  if (blocking.length === 0) {
+  if (!hoveredMask) {
     return [{ start: 0, end: viewportWidth }];
   }
 
-  // Merge overlapping blocked x-ranges
-  const blocked = mergeRanges(
-    blocking.map((r) => ({ start: r.left, end: r.right })),
-  );
+  // Only block if the hovered mask's vertical range contains mousePos.y
+  if (mousePos.y < hoveredMask.top || mousePos.y > hoveredMask.bottom) {
+    return [{ start: 0, end: viewportWidth }];
+  }
 
-  // Build segments in the gaps
-  return buildSegments(blocked, 0, viewportWidth);
+  // Build segments around the single hovered mask
+  const segments = [];
+  if (hoveredMask.left > 0) {
+    segments.push({ start: 0, end: hoveredMask.left });
+  }
+  if (hoveredMask.right < viewportWidth) {
+    segments.push({ start: hoveredMask.right, end: viewportWidth });
+  }
+
+  return segments.length > 0 ? segments : [{ start: 0, end: viewportWidth }];
 }
 
-function buildVerticalSegments(mousePos, masks) {
+function buildVerticalSegments(mousePos, hoveredMask) {
   const viewportHeight = window.innerHeight;
 
-  // Find masks that block the vertical line (their horizontal range contains mousePos.x)
-  const blocking = masks.filter(
-    (r) => mousePos.x >= r.left && mousePos.x <= r.right,
-  );
-
-  if (blocking.length === 0) {
+  if (!hoveredMask) {
     return [{ start: 0, end: viewportHeight }];
   }
 
-  // Merge overlapping blocked y-ranges
-  const blocked = mergeRanges(
-    blocking.map((r) => ({ start: r.top, end: r.bottom })),
-  );
-
-  // Build segments in the gaps
-  return buildSegments(blocked, 0, viewportHeight);
-}
-
-function mergeRanges(ranges) {
-  if (ranges.length === 0) return [];
-  const sorted = [...ranges].sort((a, b) => a.start - b.start);
-  const merged = [sorted[0]];
-  for (let i = 1; i < sorted.length; i++) {
-    const last = merged[merged.length - 1];
-    if (sorted[i].start <= last.end) {
-      last.end = Math.max(last.end, sorted[i].end);
-    } else {
-      merged.push(sorted[i]);
-    }
+  // Only block if the hovered mask's horizontal range contains mousePos.x
+  if (mousePos.x < hoveredMask.left || mousePos.x > hoveredMask.right) {
+    return [{ start: 0, end: viewportHeight }];
   }
-  return merged;
-}
 
-function buildSegments(blocked, rangeStart, rangeEnd) {
+  // Build segments around the single hovered mask
   const segments = [];
-  let cursor = rangeStart;
-  for (const block of blocked) {
-    if (cursor < block.start) {
-      segments.push({ start: cursor, end: block.start });
-    }
-    cursor = block.end;
+  if (hoveredMask.top > 0) {
+    segments.push({ start: 0, end: hoveredMask.top });
   }
-  if (cursor < rangeEnd) {
-    segments.push({ start: cursor, end: rangeEnd });
+  if (hoveredMask.bottom < viewportHeight) {
+    segments.push({ start: hoveredMask.bottom, end: viewportHeight });
   }
-  return segments;
+
+  return segments.length > 0 ? segments : [{ start: 0, end: viewportHeight }];
 }
