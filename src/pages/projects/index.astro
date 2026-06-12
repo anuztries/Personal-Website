@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const allProjects = await getCollection("projects");
+
+const projects = allProjects
+  .filter(function (project) {
+    return !project.data.draft;
+  })
+  .sort(function (a, b) {
+    // pinned first
+    if (a.data.pinned && !b.data.pinned) return -1;
+    if (!a.data.pinned && b.data.pinned) return 1;
+    // then by order if set
+    const aOrder = a.data.order ?? Infinity;
+    const bOrder = b.data.order ?? Infinity;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    // then by date
+    return b.data.date.getTime() - a.data.date.getTime();
+  })
+  .map(function (project) {
+    return {
+      ...project.data,
+      slug: project.id
+        .replace(/\.md$/, "")
+        .replace(/\s+/g, "-")
+        .toLowerCase(),
+    };
+  });
+---
+
+<BaseLayout title="Projects — Anuj Khatri">
+  <div class="max-w-5xl mx-auto py-12 px-8 flex flex-col gap-10">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4">
+      <h1 class="font-mono font-bold text-4xl tracking-tight">/Projects</h1>
+      <p class="font-sans text-base text-gray-600 leading-relaxed">
+        Things I have built — hardware, software, and everything in between.
+      </p>
+    </div>
+
+    <!-- Divider -->
+    <hr class="border-gray-200" />
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        projects.length === 0 && (
+          <p class="font-mono text-sm text-gray-400 col-span-3">[ no projects yet ]</p>
+        )
+      }
+      {
+        projects.map(function (project) {
+          const dateStr = new Date(project.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+          return (
+            
+            <a  href={"/projects/" + project.slug}
+              class="crosshair-mask focus-corners flex flex-col gap-0 border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 transition-colors no-underline group"
+            >
+              <!-- Thumbnail -->
+              <div class="w-full aspect-video bg-gray-100 overflow-hidden flex items-center justify-center">
+                {project.thumbnail ? (
+                  <img
+                    src={project.thumbnail}
+                    alt={project.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                ) : (
+                  <span class="font-mono text-xs text-gray-400">[ no thumbnail ]</span>
+                )}
+              </div>
+              <!-- Card Info -->
+              <div class="p-4 flex flex-col gap-1">
+                <span class="font-mono font-medium text-sm text-black group-hover:text-blue-700 transition-colors">
+                  {project.title}
+                </span>
+                <span class="font-mono text-xs text-gray-400">
+                  {dateStr}
+                </span>
+                <span class="hidden sm:block font-sans text-sm text-gray-500 leading-relaxed mt-1">
+  {project.description}
+</span>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+
+    <!-- Back link -->
+    
+    <a  href="/"
+      class="font-mono text-sm text-gray-400 hover:text-black transition-colors w-fit"
+    >
+      ← back to homepage
+    </a>
+
+  </div>
+</BaseLayout>

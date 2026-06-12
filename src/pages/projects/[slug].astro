@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection("projects");
+
+  return allProjects
+    .filter(function (project) {
+      return !project.data.draft;
+    })
+    .map(function (project) {
+      const slug = project.id
+        .replace(/\.md$/, "")
+        .replace(/\s+/g, "-")
+        .toLowerCase();
+      return {
+        params: { slug },
+        props: { project },
+      };
+    });
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const dateStr = new Date(project.data.date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={project.data.title + " — Anuj Khatri"}>
+  <div class="max-w-5xl mx-auto py-12 px-8">
+    <div class="flex flex-row gap-12 items-start">
+      <!-- Main content -->
+      <div class="flex flex-col gap-8 flex-1 min-w-0">
+        <!-- Header -->
+        <div class="flex flex-col gap-2">
+          <h1 class="font-mono font-bold text-4xl tracking-tight">
+            {project.data.title}
+          </h1>
+          <span class="font-mono text-sm text-gray-400">{dateStr}</span>
+          <p class="font-sans text-base text-gray-600 leading-relaxed mt-1">
+            {project.data.description}
+          </p>
+        </div>
+
+        <!-- Divider -->
+        <hr class="border-gray-200" />
+
+        <!-- Project content -->
+        <article class="prose-content flex flex-col gap-4">
+          <Content />
+        </article>
+
+        <!-- Divider -->
+        <hr class="border-gray-200" />
+
+        <!-- Back link -->
+
+        <a
+          href="/projects"
+          class="font-mono text-sm text-gray-400 hover:text-black transition-colors w-fit"
+        >
+          ← back to projects
+        </a>
+      </div>
+
+      <!-- Fixed sidebar -->
+      <aside class="sticky top-12 flex flex-col gap-3 w-48 shrink-0">
+        <span class="font-mono text-xs text-gray-400 uppercase tracking-widest">
+          Links
+        </span>
+
+        {
+          project.data.projectUrl && (
+            <a
+              href={project.data.projectUrl}
+              target="_blank"
+              class="crosshair-mask focus-corners link-button text-center"
+            >
+              [Try Project]
+            </a>
+          )
+        }
+
+        {
+          project.data.githubUrl && (
+            <a
+              href={project.data.githubUrl}
+              target="_blank"
+              class="crosshair-mask focus-corners link-button text-center"
+            >
+              [Source Code]
+            </a>
+          )
+        }
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

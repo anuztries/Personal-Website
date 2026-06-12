@@ -2,6 +2,64 @@
 import ProjectCard from "../components/ProjectCard.astro";
 import FocusCroners from "../components/FocusCroners.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog");
+const allProjects = await getCollection("projects");
+
+const recentPosts = allPosts
+  .filter(function (post) {
+    return !post.data.draft;
+  })
+  .sort(function (a, b) {
+    return b.data.date.getTime() - a.data.date.getTime();
+  })
+  .slice(0, 4)
+  .map(function (post) {
+    return {
+      title: post.data.title,
+      date: post.data.date,
+      slug: post.id.replace(/\.md$/, "").replace(/\s+/g, "-").toLowerCase(),
+    };
+  });
+
+const allActiveProjects = allProjects
+  .filter(function (p) {
+    return !p.data.draft;
+  })
+  .map(function (p) {
+    return {
+      ...p.data,
+      slug: p.id.replace(/\.md$/, "").replace(/\s+/g, "-").toLowerCase(),
+    };
+  });
+
+const pinnedProjects = allActiveProjects
+  .filter(function (p) {
+    return p.pinned;
+  })
+  .sort(function (a, b) {
+    const aOrder = a.order ?? Infinity;
+    const bOrder = b.order ?? Infinity;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    return b.date.getTime() - a.date.getTime();
+  });
+
+const unpinnedProjects = allActiveProjects
+  .filter(function (p) {
+    return !p.pinned;
+  })
+  .sort(function (a, b) {
+    const aOrder = a.order ?? Infinity;
+    const bOrder = b.order ?? Infinity;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    return b.date.getTime() - a.date.getTime();
+  });
+
+const homepageProjects =
+  pinnedProjects.length >= 3
+    ? pinnedProjects.slice(0, 3)
+    : [...pinnedProjects, ...unpinnedProjects].slice(0, 3);
 ---
 
 <BaseLayout>
@@ -73,7 +131,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <img
           src="/profilepic.jpg"
           alt="Anuj Khatri"
-          class="hover-above-crosshair w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
+          class="crosshair-mask w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
         />
       </FocusCroners>
     </section>
@@ -85,31 +143,52 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <section class="flex flex-col gap-6">
       <h2 class="font-mono font-medium tracking-tight">/Recent Projects</h2>
 
-      <div class="grid grid-cols-3 gap-4">
-        <!-- Project Card placeholder — repeat this block per project -->
-        <div
-          class="border border-gray-300 rounded-lg overflow-hidden hover:border-gray-500 transition-colors cursor-pointer"
-        >
-          <!-- Thumbnail -->
-          <div
-            class="w-full aspect-video bg-gray-200 flex items-center justify-center"
-          >
-            <span class="font-mono text-xs text-gray-400">[ thumbnail ]</span>
-          </div>
-          <!-- Card Info -->
-          <div class="p-3 flex flex-col gap-1">
-            <span class="font-mono font-medium text-sm">Project Name</span>
-            <span class="font-sans text-xs text-gray-500"
-              >Short description of the project goes here.</span
-            >
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <ProjectCard />
-
-        <!-- Card 3 -->
-        <ProjectCard />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {
+          homepageProjects.length === 0 && (
+            <p class="font-mono text-sm text-gray-400 col-span-3">
+              [ no projects yet ]
+            </p>
+          )
+        }
+        {
+          homepageProjects.map(function (project) {
+            const dateStr = new Date(project.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+            return (
+              <a
+                href={"/projects/" + project.slug}
+                class="crosshair-mask focus-corners flex flex-col gap-0 border border-gray-200 rounded-lg overflow-hidden hover:border-gray-400 transition-colors no-underline group"
+              >
+                <div class="w-full aspect-video bg-gray-100 overflow-hidden flex items-center justify-center">
+                  {project.thumbnail ? (
+                    <img
+                      src={project.thumbnail}
+                      alt={project.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <span class="font-mono text-xs text-gray-400">
+                      [ no thumbnail ]
+                    </span>
+                  )}
+                </div>
+                <div class="p-4 flex flex-col gap-1">
+                  <span class="font-mono font-medium text-sm text-black group-hover:text-blue-700 transition-colors">
+                    {project.title}
+                  </span>
+                  <span class="font-mono text-xs text-gray-400">{dateStr}</span>
+                  <span class="hidden sm:block font-sans text-sm text-gray-500 leading-relaxed mt-1">
+                    {project.description}
+                  </span>
+                </div>
+              </a>
+            );
+          })
+        }
       </div>
 
       <a
@@ -128,34 +207,33 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <h2 class="font-mono font-medium tracking-tight">/Recent Writings</h2>
 
       <div class="flex flex-col gap-3">
-        <!-- Blog post row placeholder — repeat per post -->
-        <div
-          class="flex flex-row items-baseline justify-between border-b border-gray-200 pb-3"
-        >
-          <a
-            href="/blog/post-slug"
-            class="font-mono text-sm hover:text-blue-600 transition-colors"
-          >
-            Post Title Goes Here
-          </a>
-          <span class="font-mono text-xs text-gray-400 shrink-0 ml-4"
-            >Jun 10, 2026</span
-          >
-        </div>
-
-        <div
-          class="flex flex-row items-baseline justify-between border-b border-gray-200 pb-3"
-        >
-          <a
-            href="/blog/post-slug"
-            class="font-mono text-sm hover:text-blue-600 transition-colors"
-          >
-            Another Post Title
-          </a>
-          <span class="font-mono text-xs text-gray-400 shrink-0 ml-4"
-            >May 28, 2026</span
-          >
-        </div>
+        {
+          recentPosts.length === 0 && (
+            <p class="font-mono text-sm text-gray-400">[ no posts yet ]</p>
+          )
+        }
+        {
+          recentPosts.map(function (post) {
+            const dateStr = new Date(post.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            return (
+              <a
+                href={"/writing/" + post.slug}
+                class="flex flex-row items-baseline justify-between border-b border-gray-200 py-4 no-underline group"
+              >
+                <span class="font-mono text-base text-black group-hover:text-blue-600 transition-colors">
+                  [{post.title}]
+                </span>
+                <span class="font-mono text-sm text-gray-400 shrink-0 ml-4">
+                  {dateStr}
+                </span>
+              </a>
+            );
+          })
+        }
       </div>
 
       <a

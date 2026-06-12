@@ -65,7 +65,10 @@ const posts = allPosts
               title={post.data.title}
               description={post.data.description}
               date={post.data.date}
-              url={"/writing/" + post.id}
+              url={
+                "/writing/" +
+                post.id.replace(/\.md$/, "").replace(/\s+/g, "-").toLowerCase()
+              }
             />
           );
         })

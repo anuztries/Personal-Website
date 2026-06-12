@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog");
+
+  return allPosts
+    .filter(function (post) {
+      return !post.data.draft;
+    })
+    .map(function (post) {
+      const slug = post.id
+        .replace(/\.md$/, "")
+        .replace(/\s+/g, "-")
+        .toLowerCase();
+
+      return {
+        params: { slug },
+        props: { post },
+      };
+    });
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateStr = new Date(post.data.date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={post.data.title}>
+  <div class="max-w-2xl mx-auto py-12 px-8 flex flex-col gap-8">
+    <!-- Post Header -->
+    <div class="flex flex-col gap-3">
+      <h1 class="font-mono font-bold text-4xl tracking-tight">
+        {post.data.title}
+      </h1>
+      <span class="font-mono text-sm text-gray-400">{dateStr}</span>
+    </div>
+
+    <!-- Divider -->
+    <hr class="border-gray-200" />
+
+    <!-- Post Content -->
+    <article class="prose-content flex flex-col gap-4">
+      <Content />
+    </article>
+
+    <!-- Divider -->
+    <hr class="border-gray-200" />
+
+    <!-- Back link -->
+
+    <a
+      href="/writing"
+      class="font-mono text-sm text-gray-400 hover:text-black transition-colors w-fit"
+    >
+      ← back to writing
+    </a>
+  </div>
+</BaseLayout>
