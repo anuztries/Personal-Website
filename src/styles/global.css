@@ -19,7 +19,7 @@ html {
   background-size: 20px 20px;
   background-position: 0 0;
   background-attachment: fixed;
-  background-color: #ffffff;
+  background-color: #f5f5f0;
 }
 
 body {
@@ -113,76 +113,73 @@ body {
   /* Schematic sheet frame (EasyEDA/KiCAD-style double border) */
   .schematic-frame {
     position: relative;
-    border: 2px solid #000000;
+    border: 3px solid #1a1a1a;
     padding: 0;
-    background-color: transparent;
-  }
-
-  .schematic-frame::before {
-    content: "";
-    position: absolute;
-    inset: 8px;
-    border: 1.5px solid #000000;
-    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+      inset 0 0 0 2px #1a1a1a,
+      4px 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .schematic-inner {
     position: relative;
-    padding: 24px 28px;
-    min-height: 500px;
+    padding: 32px 36px;
+    min-height: 520px;
   }
 
   /* Grid reference labels inside the border */
   .grid-labels-horizontal {
     position: absolute;
-    top: 10px;
-    left: 12px;
-    right: 12px;
+    top: 8px;
+    left: 10px;
+    right: 10px;
     display: flex;
     justify-content: space-between;
     font-family: "IBM Plex Mono", monospace;
-    font-size: 9px;
-    color: #000000;
+    font-size: 10px;
+    font-weight: 600;
+    color: #1a1a1a;
     pointer-events: none;
   }
 
   .grid-labels-horizontal.bottom {
     top: auto;
-    bottom: 10px;
+    bottom: 8px;
   }
 
   .grid-labels-vertical {
     position: absolute;
-    left: 10px;
-    top: 12px;
-    bottom: 12px;
+    left: 8px;
+    top: 10px;
+    bottom: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     font-family: "IBM Plex Mono", monospace;
-    font-size: 9px;
-    color: #000000;
+    font-size: 10px;
+    font-weight: 600;
+    color: #1a1a1a;
     pointer-events: none;
   }
 
   .grid-labels-vertical.right {
     left: auto;
-    right: 10px;
+    right: 8px;
   }
 
   .grid-label {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
   }
 
   /* Title block container - attached to bottom-right corner */
   .title-block-container {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
+    bottom: 6px;
+    right: 6px;
     z-index: 5;
   }
 
@@ -190,15 +187,15 @@ body {
   .title-block-grid {
     display: flex;
     flex-direction: column;
-    border: 1.5px solid #000000;
+    border: 2px solid #1a1a1a;
     font-family: "IBM Plex Mono", monospace;
-    background-color: transparent;
-    width: 280px;
+    background-color: #ffffff;
+    width: 300px;
   }
 
   .tb-row {
     display: flex;
-    border-top: 1px solid #000000;
+    border-top: 1.5px solid #1a1a1a;
   }
 
   .tb-row:first-child {
@@ -209,89 +206,92 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3px 4px;
-    font-size: 7px;
-    border-right: 1px solid #000000;
+    padding: 4px 5px;
+    font-size: 8px;
+    border-right: 1.5px solid #1a1a1a;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
+    color: #1a1a1a;
   }
 
   .tb-cell:last-child {
     border-right: none;
   }
 
-  /* Main title cell - full width, larger */
+  /* Main title cell - full width, larger with blue background */
   .tb-title-main {
     width: 100%;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
-    padding: 5px 6px;
+    padding: 6px 8px;
     justify-content: center;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
+    background-color: #2563eb;
+    color: #ffffff;
   }
 
   /* Label cells - smaller, fixed width */
   .tb-label {
-    font-weight: 600;
-    color: #000000;
+    font-weight: 700;
+    color: #1a1a1a;
     justify-content: center;
-    width: 50px;
-    font-size: 6px;
-    padding: 3px 2px;
+    width: 55px;
+    font-size: 7px;
+    padding: 4px 3px;
   }
 
   .tb-label-small {
-    font-weight: 600;
-    color: #000000;
+    font-weight: 700;
+    color: #1a1a1a;
     justify-content: center;
-    width: 45px;
-    font-size: 6px;
-    padding: 3px 2px;
+    width: 50px;
+    font-size: 7px;
+    padding: 4px 3px;
   }
 
   /* Value cells - flexible width */
   .tb-value {
     font-weight: 500;
-    color: #000000;
+    color: #1a1a1a;
     flex: 1;
     justify-content: flex-start;
-    padding-left: 4px;
-    font-size: 7px;
+    padding-left: 5px;
+    font-size: 8px;
   }
 
   .tb-value-small {
     font-weight: 500;
-    color: #000000;
+    color: #1a1a1a;
     flex: 1;
     justify-content: flex-start;
-    padding-left: 4px;
-    font-size: 6px;
+    padding-left: 5px;
+    font-size: 7px;
   }
 
   /* Special width for drawing number section */
   .tb-drawing-section {
     display: flex;
-    border-right: 1px solid #000000;
+    border-right: 1.5px solid #1a1a1a;
   }
 
   .tb-drawing-label {
-    width: 65px;
-    font-weight: 600;
-    font-size: 6px;
+    width: 70px;
+    font-weight: 700;
+    font-size: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: 1px solid #000000;
+    border-right: 1.5px solid #1a1a1a;
     text-transform: uppercase;
   }
 
   .tb-drawing-value {
     flex: 1;
     font-weight: 500;
-    font-size: 7px;
+    font-size: 8px;
     display: flex;
     align-items: center;
-    padding-left: 4px;
+    padding-left: 5px;
   }
 
   .link-button {
