@@ -110,7 +110,7 @@ body {
 }
 
 @layer components {
-  /* Schematic sheet frame (EasyEDA-style double border) */
+  /* Schematic sheet frame (EasyEDA/KiCAD-style double border) */
   .schematic-frame {
     position: relative;
     border: 2px solid #000000;
@@ -121,7 +121,7 @@ body {
   .schematic-frame::before {
     content: "";
     position: absolute;
-    inset: 6px;
+    inset: 8px;
     border: 1.5px solid #000000;
     pointer-events: none;
   }
@@ -132,129 +132,166 @@ body {
     min-height: 500px;
   }
 
-  /* Grid reference labels (inside borders) */
-  .schematic-grid-labels {
+  /* Grid reference labels inside the border */
+  .grid-labels-horizontal {
     position: absolute;
+    top: 10px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
     font-family: "IBM Plex Mono", monospace;
     font-size: 9px;
-    color: #666666;
+    color: #000000;
     pointer-events: none;
-    z-index: 10;
   }
 
-  .schematic-grid-labels.top {
-    top: 10px;
-    left: 40px;
-    right: 40px;
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .schematic-grid-labels.bottom {
+  .grid-labels-horizontal.bottom {
+    top: auto;
     bottom: 10px;
-    left: 40px;
-    right: 180px;
-    display: flex;
-    justify-content: space-around;
   }
 
-  .schematic-grid-labels.left {
-    top: 40px;
+  .grid-labels-vertical {
+    position: absolute;
     left: 10px;
-    bottom: 80px;
+    top: 12px;
+    bottom: 12px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    color: #000000;
+    pointer-events: none;
   }
 
-  .schematic-grid-labels.right {
-    top: 40px;
+  .grid-labels-vertical.right {
+    left: auto;
     right: 10px;
-    bottom: 80px;
+  }
+
+  .grid-label {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
   }
 
   /* Title block container - attached to bottom-right corner */
   .title-block-container {
     position: absolute;
-    bottom: 6px;
-    right: 6px;
+    bottom: 8px;
+    right: 8px;
     z-index: 5;
   }
 
-  /* Title block (bottom-right info box - EasyEDA/KiCad style) */
-  .title-block {
+  /* Title block grid layout (KiCAD/EasyEDA style) */
+  .title-block-grid {
+    display: flex;
+    flex-direction: column;
     border: 1.5px solid #000000;
     font-family: "IBM Plex Mono", monospace;
     background-color: transparent;
     width: 280px;
   }
 
-  .title-block-row {
+  .tb-row {
     display: flex;
     border-top: 1px solid #000000;
-    min-height: 22px;
   }
 
-  .title-block-row:first-child {
+  .tb-row:first-child {
     border-top: none;
   }
 
-  .title-block-row.brick-layout {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .brick-cell {
+  .tb-cell {
     display: flex;
     align-items: center;
-    padding: 3px 5px;
-    font-size: 8px;
+    justify-content: center;
+    padding: 3px 4px;
+    font-size: 7px;
     border-right: 1px solid #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
-  .brick-cell:last-child {
+  .tb-cell:last-child {
     border-right: none;
   }
 
-  .brick-cell.label {
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #555555;
-    white-space: nowrap;
+  /* Main title cell - full width, larger */
+  .tb-title-main {
+    width: 100%;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 5px 6px;
     justify-content: center;
+    letter-spacing: 0.05em;
   }
 
-  .brick-cell.value {
+  /* Label cells - smaller, fixed width */
+  .tb-label {
+    font-weight: 600;
+    color: #000000;
+    justify-content: center;
+    width: 50px;
+    font-size: 6px;
+    padding: 3px 2px;
+  }
+
+  .tb-label-small {
+    font-weight: 600;
+    color: #000000;
+    justify-content: center;
+    width: 45px;
+    font-size: 6px;
+    padding: 3px 2px;
+  }
+
+  /* Value cells - flexible width */
+  .tb-value {
     font-weight: 500;
     color: #000000;
+    flex: 1;
+    justify-content: flex-start;
+    padding-left: 4px;
+    font-size: 7px;
   }
 
-  .brick-cell.value.wide {
-    grid-column: span 2;
-  }
-
-  /* Main title area in title block */
-  .title-block-main-title-full {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+  .tb-value-small {
+    font-weight: 500;
     color: #000000;
-    padding: 5px 8px;
-    border-bottom: 1.5px solid #000000;
-    width: 100%;
+    flex: 1;
+    justify-content: flex-start;
+    padding-left: 4px;
+    font-size: 6px;
   }
 
-  .title-block-main-subtitle-full {
-    font-size: 9px;
-    color: #666666;
-    padding: 3px 8px;
-    border-bottom: 1px solid #000000;
-    width: 100%;
+  /* Special width for drawing number section */
+  .tb-drawing-section {
+    display: flex;
+    border-right: 1px solid #000000;
+  }
+
+  .tb-drawing-label {
+    width: 65px;
+    font-weight: 600;
+    font-size: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #000000;
+    text-transform: uppercase;
+  }
+
+  .tb-drawing-value {
+    flex: 1;
+    font-weight: 500;
+    font-size: 7px;
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
   }
 
   .link-button {

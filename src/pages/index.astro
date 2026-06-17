@@ -68,28 +68,46 @@ const homepageProjects =
     <section class="schematic-frame">
       <div class="schematic-inner flex flex-col gap-5">
         <!-- Grid reference labels (inside borders) -->
-        <div class="schematic-grid-labels top">
-          <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+        <div class="grid-labels-horizontal">
+          <span class="grid-label">A</span>
+          <span class="grid-label">B</span>
+          <span class="grid-label">C</span>
+          <span class="grid-label">D</span>
+          <span class="grid-label">E</span>
+          <span class="grid-label">F</span>
         </div>
-        <div class="schematic-grid-labels bottom">
-          <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+        <div class="grid-labels-horizontal bottom">
+          <span class="grid-label">A</span>
+          <span class="grid-label">B</span>
+          <span class="grid-label">C</span>
+          <span class="grid-label">D</span>
+          <span class="grid-label">E</span>
+          <span class="grid-label">F</span>
         </div>
-        <div class="schematic-grid-labels left">
-          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        <div class="grid-labels-vertical">
+          <span class="grid-label">1</span>
+          <span class="grid-label">2</span>
+          <span class="grid-label">3</span>
+          <span class="grid-label">4</span>
+          <span class="grid-label">5</span>
         </div>
-        <div class="schematic-grid-labels right">
-          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        <div class="grid-labels-vertical right">
+          <span class="grid-label">1</span>
+          <span class="grid-label">2</span>
+          <span class="grid-label">3</span>
+          <span class="grid-label">4</span>
+          <span class="grid-label">5</span>
         </div>
 
         <!-- Top: Title -->
-        <div class="flex justify-end pt-4">
+        <div class="flex justify-end pt-6">
           <h1 class="font-mono font-bold text-4xl tracking-tight text-black">
             &lt; ANUJ KHATRI/&gt;
           </h1>
         </div>
 
         <!-- Middle: Photo + Bio/Socials -->
-        <div class="flex flex-row items-start gap-8 mt-6">
+        <div class="flex flex-row items-start gap-8 mt-4">
           <!-- Left: Photo -->
           <div class="flex flex-col gap-2">
             <span class="font-mono text-xs text-black">[This is me]</span>
@@ -159,37 +177,35 @@ const homepageProjects =
           </div>
         </div>
 
-        <!-- Bottom: Title Block (EasyEDA/KiCad style - attached to bottom-right) -->
+        <!-- Bottom: Title Block (KiCAD/EasyEDA style - attached to bottom-right) -->
         <div class="title-block-container">
-          <div class="title-block">
-            <!-- Row 1: Main title (spans multiple columns) -->
-            <div class="title-block-row">
-              <div class="title-block-main-title-full">ANUJ KHATRI — PERSONAL WEBSITE</div>
+          <div class="title-block-grid">
+            <!-- Row 1: Main title (large box spanning full width) -->
+            <div class="tb-row">
+              <div class="tb-cell tb-title-main">ANUJ KHATRI — PERSONAL WEBSITE</div>
             </div>
-            <!-- Row 2: Subtitle -->
-            <div class="title-block-row">
-              <div class="title-block-main-subtitle-full">Homepage / Landing Page</div>
+            <!-- Row 2: Drawing info row with brick layout -->
+            <div class="tb-row">
+              <div class="tb-cell tb-label">TITLE</div>
+              <div class="tb-cell tb-value">Personal Portfolio</div>
+              <div class="tb-drawing-section">
+                <div class="tb-drawing-label">DRAWING NO.</div>
+                <div class="tb-drawing-value">SCH-001</div>
+              </div>
             </div>
-            <!-- Row 3: Brick layout with multiple info boxes -->
-            <div class="title-block-row brick-layout">
-              <div class="brick-cell label">TITLE</div>
-              <div class="brick-cell value wide">Personal Portfolio & Blog</div>
-              <div class="brick-cell label">DRAWING NO.</div>
-              <div class="brick-cell value">SCH-001</div>
+            <!-- Row 3: Revision and Date -->
+            <div class="tb-row">
+              <div class="tb-cell tb-label">REVISION</div>
+              <div class="tb-cell tb-value">Rev 1.0</div>
+              <div class="tb-cell tb-label-small">DATE</div>
+              <div class="tb-cell tb-value-small">${new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</div>
             </div>
-            <!-- Row 4: More brick layout -->
-            <div class="title-block-row brick-layout">
-              <div class="brick-cell label">REVISION</div>
-              <div class="brick-cell value">Rev 1.0</div>
-              <div class="brick-cell label">DATE</div>
-              <div class="brick-cell value">${new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-            </div>
-            <!-- Row 5: Author and Sheet -->
-            <div class="title-block-row brick-layout">
-              <div class="brick-cell label">AUTHOR</div>
-              <div class="brick-cell value">Anuj Khatri</div>
-              <div class="brick-cell label">SHEET</div>
-              <div class="brick-cell value">1 of 1</div>
+            <!-- Row 4: Author and Sheet -->
+            <div class="tb-row">
+              <div class="tb-cell tb-label">AUTHOR</div>
+              <div class="tb-cell tb-value">Anuj Khatri</div>
+              <div class="tb-cell tb-label-small">SHEET</div>
+              <div class="tb-cell tb-value-small">1 of 1</div>
             </div>
           </div>
         </div>
