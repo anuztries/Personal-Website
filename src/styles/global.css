@@ -110,30 +110,88 @@ body {
 }
 
 @layer components {
-  /* Schematic sheet frame (KiCad-style double border) */
+  /* Schematic sheet frame (KiCad-style double border with corner marks) */
   .schematic-frame {
     position: relative;
-    border: 1px solid #000000;
-    padding: 6px;
+    border: 2px solid #000000;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.95);
   }
 
   .schematic-frame::before {
     content: "";
     position: absolute;
-    inset: 6px;
+    inset: 8px;
     border: 1.5px solid #000000;
+    pointer-events: none;
+  }
+
+  /* Corner bracket marks for schematic feel */
+  .schematic-frame::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 1px solid #000000;
     pointer-events: none;
   }
 
   .schematic-inner {
     position: relative;
-    padding: 14px 20px;
+    padding: 20px 24px;
+    min-height: 500px;
   }
 
-  /* Title block (bottom-right info box) */
-  .title-block {
-    border: 1px solid #000000;
+  /* Grid reference labels (A, B, C... and 1, 2, 3...) */
+  .schematic-grid-labels {
+    position: absolute;
     font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    color: #666666;
+    pointer-events: none;
+  }
+
+  .schematic-grid-labels.top {
+    top: -18px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .schematic-grid-labels.bottom {
+    bottom: -18px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .schematic-grid-labels.left {
+    top: 0;
+    left: -20px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .schematic-grid-labels.right {
+    top: 0;
+    right: -20px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  /* Title block (bottom-right info box - KiCad style) */
+  .title-block {
+    border: 1.5px solid #000000;
+    font-family: "IBM Plex Mono", monospace;
+    background-color: #ffffff;
   }
 
   .title-block-row {
@@ -145,20 +203,54 @@ body {
     border-top: none;
   }
 
+  .title-block-row.double-height {
+    min-height: 32px;
+  }
+
   .title-block-label {
     border-right: 1px solid #000000;
-    padding: 3px 8px;
-    font-size: 10px;
-    letter-spacing: 0.05em;
-    color: #666666;
+    padding: 4px 6px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #555555;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
   }
 
   .title-block-value {
-    padding: 3px 8px;
-    font-size: 11px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 500;
     color: #000000;
     flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Main title area in title block */
+  .title-block-main {
+    border: 1.5px solid #000000;
+    font-family: "IBM Plex Mono", monospace;
+    background-color: #ffffff;
+  }
+
+  .title-block-main-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #000000;
+    padding: 6px 10px;
+    border-bottom: 1.5px solid #000000;
+  }
+
+  .title-block-main-subtitle {
+    font-size: 10px;
+    color: #666666;
+    padding: 3px 10px;
   }
 
   .link-button {

@@ -66,16 +66,30 @@ const homepageProjects =
   <div class="min-h-screen flex flex-col gap-16 py-12 px-8">
     <!-- Hero Section: Schematic Sheet -->
     <section class="schematic-frame">
+      <!-- Grid reference labels -->
+      <div class="schematic-grid-labels top">
+        <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+      </div>
+      <div class="schematic-grid-labels bottom">
+        <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+      </div>
+      <div class="schematic-grid-labels left">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+      </div>
+      <div class="schematic-grid-labels right">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+      </div>
+
       <div class="schematic-inner flex flex-col gap-5">
         <!-- Top: Title -->
-        <div class="flex justify-end">
+        <div class="flex justify-end pt-4">
           <h1 class="font-mono font-bold text-4xl tracking-tight text-black">
             &lt; ANUJ KHATRI/&gt;
           </h1>
         </div>
 
         <!-- Middle: Photo + Bio/Socials -->
-        <div class="flex flex-row items-start gap-8">
+        <div class="flex flex-row items-start gap-8 mt-6">
           <!-- Left: Photo -->
           <div class="flex flex-col gap-2">
             <span class="font-mono text-xs text-black">[This is me]</span>
@@ -145,20 +159,37 @@ const homepageProjects =
           </div>
         </div>
 
-        <!-- Bottom: Title Block (right-aligned) -->
-        <div class="flex justify-end">
-          <div class="title-block w-72">
-            <div class="title-block-row">
-              <span class="title-block-label w-20">TITLE</span>
-              <span class="title-block-value">Anuj Khatri — Home</span>
+        <!-- Bottom: Enhanced Title Block (KiCad style) -->
+        <div class="flex justify-end mt-auto">
+          <div class="title-block-main w-96">
+            <!-- Main title area -->
+            <div class="title-block-main-title">ANUJ KHATRI — PERSONAL WEBSITE</div>
+            <div class="title-block-main-subtitle">Homepage / Landing Page</div>
+            
+            <!-- Info rows -->
+            <div class="title-block-row double-height">
+              <span class="title-block-label w-24">TITLE</span>
+              <span class="title-block-value">Personal Portfolio & Blog</span>
             </div>
             <div class="title-block-row">
-              <span class="title-block-label w-20">PAGE</span>
-              <span class="title-block-value">1 of 1 (it's just me)</span>
+              <span class="title-block-label w-24">DRAWING NO.</span>
+              <span class="title-block-value">SCH-001</span>
             </div>
             <div class="title-block-row">
-              <span class="title-block-label w-20">AUTHOR</span>
+              <span class="title-block-label w-24">REVISION</span>
+              <span class="title-block-value">Rev 1.0</span>
+            </div>
+            <div class="title-block-row">
+              <span class="title-block-label w-24">DATE</span>
+              <span class="title-block-value">${new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+            </div>
+            <div class="title-block-row">
+              <span class="title-block-label w-24">AUTHOR</span>
               <span class="title-block-value">Anuj Khatri</span>
+            </div>
+            <div class="title-block-row">
+              <span class="title-block-label w-24">SHEET</span>
+              <span class="title-block-value">1 of 1</span>
             </div>
           </div>
         </div>
