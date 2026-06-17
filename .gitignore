@@ -9,29 +9,26 @@ build/
 
 # Cache directories
 .cache/
-.node_cache/
+.node-cache/
 
 # Environment variables
 .env
 .env.local
 .env.*
 
-# Editors
+# IDE files
 .vscode/
 .idea/
-
-# OS generated files
-.DS_Store
-Thumbs.db
+*.swp
+*.swo
 
 # Logs
 *.log
 
 # Temporary files
 *.tmp
-*.temp
+
+# OS generated files
+.DS_Store
+Thumbs.db
 ```
-
-Wait, let me reconsider. The changes only include source files (.astro, .css) with no build artifacts, dependencies, or temporary files. Following rule #6:
-
-(empty)

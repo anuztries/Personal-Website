@@ -66,21 +66,21 @@ const homepageProjects =
   <div class="min-h-screen flex flex-col gap-16 py-12 px-8">
     <!-- Hero Section: Schematic Sheet -->
     <section class="schematic-frame">
-      <!-- Grid reference labels -->
-      <div class="schematic-grid-labels top">
-        <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
-      </div>
-      <div class="schematic-grid-labels bottom">
-        <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
-      </div>
-      <div class="schematic-grid-labels left">
-        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-      </div>
-      <div class="schematic-grid-labels right">
-        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-      </div>
-
       <div class="schematic-inner flex flex-col gap-5">
+        <!-- Grid reference labels (inside borders) -->
+        <div class="schematic-grid-labels top">
+          <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+        </div>
+        <div class="schematic-grid-labels bottom">
+          <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+        </div>
+        <div class="schematic-grid-labels left">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        </div>
+        <div class="schematic-grid-labels right">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        </div>
+
         <!-- Top: Title -->
         <div class="flex justify-end pt-4">
           <h1 class="font-mono font-bold text-4xl tracking-tight text-black">
@@ -159,37 +159,37 @@ const homepageProjects =
           </div>
         </div>
 
-        <!-- Bottom: Enhanced Title Block (KiCad style) -->
-        <div class="flex justify-end mt-auto">
-          <div class="title-block-main w-96">
-            <!-- Main title area -->
-            <div class="title-block-main-title">ANUJ KHATRI — PERSONAL WEBSITE</div>
-            <div class="title-block-main-subtitle">Homepage / Landing Page</div>
-            
-            <!-- Info rows -->
-            <div class="title-block-row double-height">
-              <span class="title-block-label w-24">TITLE</span>
-              <span class="title-block-value">Personal Portfolio & Blog</span>
-            </div>
+        <!-- Bottom: Title Block (EasyEDA/KiCad style - attached to bottom-right) -->
+        <div class="title-block-container">
+          <div class="title-block">
+            <!-- Row 1: Main title (spans multiple columns) -->
             <div class="title-block-row">
-              <span class="title-block-label w-24">DRAWING NO.</span>
-              <span class="title-block-value">SCH-001</span>
+              <div class="title-block-main-title-full">ANUJ KHATRI — PERSONAL WEBSITE</div>
             </div>
+            <!-- Row 2: Subtitle -->
             <div class="title-block-row">
-              <span class="title-block-label w-24">REVISION</span>
-              <span class="title-block-value">Rev 1.0</span>
+              <div class="title-block-main-subtitle-full">Homepage / Landing Page</div>
             </div>
-            <div class="title-block-row">
-              <span class="title-block-label w-24">DATE</span>
-              <span class="title-block-value">${new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+            <!-- Row 3: Brick layout with multiple info boxes -->
+            <div class="title-block-row brick-layout">
+              <div class="brick-cell label">TITLE</div>
+              <div class="brick-cell value wide">Personal Portfolio & Blog</div>
+              <div class="brick-cell label">DRAWING NO.</div>
+              <div class="brick-cell value">SCH-001</div>
             </div>
-            <div class="title-block-row">
-              <span class="title-block-label w-24">AUTHOR</span>
-              <span class="title-block-value">Anuj Khatri</span>
+            <!-- Row 4: More brick layout -->
+            <div class="title-block-row brick-layout">
+              <div class="brick-cell label">REVISION</div>
+              <div class="brick-cell value">Rev 1.0</div>
+              <div class="brick-cell label">DATE</div>
+              <div class="brick-cell value">${new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</div>
             </div>
-            <div class="title-block-row">
-              <span class="title-block-label w-24">SHEET</span>
-              <span class="title-block-value">1 of 1</span>
+            <!-- Row 5: Author and Sheet -->
+            <div class="title-block-row brick-layout">
+              <div class="brick-cell label">AUTHOR</div>
+              <div class="brick-cell value">Anuj Khatri</div>
+              <div class="brick-cell label">SHEET</div>
+              <div class="brick-cell value">1 of 1</div>
             </div>
           </div>
         </div>
