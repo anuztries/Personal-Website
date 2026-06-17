@@ -64,76 +64,105 @@ const homepageProjects =
 
 <BaseLayout>
   <div class="min-h-screen flex flex-col gap-16 py-12 px-8">
-    <!-- Hero Section -->
-    <section class="flex flex-row items-start justify-between gap-8">
-      <!-- Left: Name + Bio + Socials -->
-      <div class="flex flex-col gap-6 max-w-lg">
-        <h1 class="text-7xl font-bold leading-none tracking-tighter">
-          ANUJ<br />KHATRI
-        </h1>
-
-        <div class="flex flex-col gap-1">
-          <p class="text-lg">Hello World!</p>
-          <p class="text-base text-gray-600">
-            I'm Anuj. Welcome to my website.
-          </p>
-          <p class="text-base text-gray-600">
-            <!-- TODO: Add your short bio here -->
-            Engineering student and maker. I build things with code, circuits, and
-            whatever I can find.
-          </p>
+    <!-- Hero Section: Schematic Sheet -->
+    <section class="schematic-frame">
+      <div class="schematic-inner flex flex-col gap-5">
+        <!-- Top: Title -->
+        <div class="flex justify-end">
+          <h1 class="font-mono font-bold text-4xl tracking-tight text-black">
+            &lt; ANUJ KHATRI/&gt;
+          </h1>
         </div>
 
-        <!-- Social Links -->
-        <div class="flex flex-row gap-3">
-          <FocusCroners>
-            <a
-              href="https://linkedin.com/in/yourprofile"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [LinkedIn]
-            </a>
-          </FocusCroners>
-          <FocusCroners>
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [GitHub]
-            </a>
-          </FocusCroners>
-          <FocusCroners>
-            <a
-              href="https://instagram.com/yourprofile"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [Instagram]
-            </a>
-          </FocusCroners>
-          <!-- Resume Link -->
-          <FocusCroners>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              class="crosshair-mask link-button"
-            >
-              [Resume]
-            </a>
-          </FocusCroners>
+        <!-- Middle: Photo + Bio/Socials -->
+        <div class="flex flex-row items-start gap-8">
+          <!-- Left: Photo -->
+          <div class="flex flex-col gap-2">
+            <span class="font-mono text-xs text-black">[This is me]</span>
+            <FocusCroners>
+              <img
+                src="/profilepic.jpg"
+                alt="Anuj Khatri"
+                class="crosshair-mask w-48 h-60 object-cover object-top rounded-md border border-black"
+              />
+            </FocusCroners>
+          </div>
+
+          <!-- Right: Bio + Socials -->
+          <div class="flex flex-col gap-5 pt-1">
+            <div class="flex flex-col gap-1">
+              <p class="font-mono text-base text-black">&gt; Hello World!</p>
+              <p class="font-mono text-base text-black">
+                &gt; I am a wanna-be polymath
+              </p>
+              <p class="font-mono text-base text-black">
+                &gt; I build things with code, circuits, and whatever I can
+                find.
+              </p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <span class="font-mono text-xs text-black">user /socials</span>
+              <div class="flex flex-row gap-3">
+                <FocusCroners>
+                  <a
+                    href="https://linkedin.com/in/yourprofile"
+                    target="_blank"
+                    class="crosshair-mask link-button text-black border-black hover:border-black"
+                  >
+                    [LinkedIn]
+                  </a>
+                </FocusCroners>
+                <FocusCroners>
+                  <a
+                    href="https://github.com/yourusername"
+                    target="_blank"
+                    class="crosshair-mask link-button text-black border-black hover:border-black"
+                  >
+                    [GitHub]
+                  </a>
+                </FocusCroners>
+                <FocusCroners>
+                  <a
+                    href="https://instagram.com/yourprofile"
+                    target="_blank"
+                    class="crosshair-mask link-button text-black border-black hover:border-black"
+                  >
+                    [Instagram]
+                  </a>
+                </FocusCroners>
+                <FocusCroners>
+                  <a
+                    href="/resume.pdf"
+                    target="_blank"
+                    class="crosshair-mask link-button text-black border-black hover:border-black"
+                  >
+                    [Resume]
+                  </a>
+                </FocusCroners>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: Title Block (right-aligned) -->
+        <div class="flex justify-end">
+          <div class="title-block w-72">
+            <div class="title-block-row">
+              <span class="title-block-label w-20">TITLE</span>
+              <span class="title-block-value">Anuj Khatri — Home</span>
+            </div>
+            <div class="title-block-row">
+              <span class="title-block-label w-20">PAGE</span>
+              <span class="title-block-value">1 of 1 (it's just me)</span>
+            </div>
+            <div class="title-block-row">
+              <span class="title-block-label w-20">AUTHOR</span>
+              <span class="title-block-value">Anuj Khatri</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Right: Profile Photo -->
-      <FocusCroners>
-        <img
-          src="/profilepic.jpg"
-          alt="Anuj Khatri"
-          class="crosshair-mask w-64 h-80 object-cover object-top rounded-lg border border-gray-300"
-        />
-      </FocusCroners>
     </section>
 
     <!-- Divider -->
@@ -193,7 +222,7 @@ const homepageProjects =
 
       <a
         href="/projects"
-        class="font-mono text-sm w-fit border-b border-gray-400 hover:border-black transition-colors"
+        class="crosshair-mask font-mono text-sm w-fit border-b border-gray-400 hover:border-black transition-colors"
       >
         [View all projects →]
       </a>

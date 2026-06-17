@@ -110,6 +110,57 @@ body {
 }
 
 @layer components {
+  /* Schematic sheet frame (KiCad-style double border) */
+  .schematic-frame {
+    position: relative;
+    border: 1px solid #000000;
+    padding: 6px;
+  }
+
+  .schematic-frame::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1.5px solid #000000;
+    pointer-events: none;
+  }
+
+  .schematic-inner {
+    position: relative;
+    padding: 14px 20px;
+  }
+
+  /* Title block (bottom-right info box) */
+  .title-block {
+    border: 1px solid #000000;
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .title-block-row {
+    display: flex;
+    border-top: 1px solid #000000;
+  }
+
+  .title-block-row:first-child {
+    border-top: none;
+  }
+
+  .title-block-label {
+    border-right: 1px solid #000000;
+    padding: 3px 8px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: #666666;
+    white-space: nowrap;
+  }
+
+  .title-block-value {
+    padding: 3px 8px;
+    font-size: 11px;
+    color: #000000;
+    flex: 1;
+  }
+
   .link-button {
     @apply font-mono text-sm w-fit border border-gray-400 px-4 py-1.5 rounded hover:border-black transition-colors;
   }

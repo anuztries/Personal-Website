@@ -53,6 +53,7 @@ export default function Crosshair() {
 
   return (
     <>
+      {/* vertical crosshair */}
       {hSegments.map((seg, i) => (
         <div
           key={"h" + i}
@@ -69,6 +70,7 @@ export default function Crosshair() {
           }}
         />
       ))}
+      {/* horizontal crosshair */}
       {vSegments.map((seg, i) => (
         <div
           key={"v" + i}
