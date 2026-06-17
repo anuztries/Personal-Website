@@ -110,147 +110,151 @@ body {
 }
 
 @layer components {
-  /* Schematic sheet frame (KiCad-style double border with corner marks) */
+  /* Schematic sheet frame (EasyEDA-style double border) */
   .schematic-frame {
     position: relative;
     border: 2px solid #000000;
-    padding: 8px;
-    background-color: rgba(255, 255, 255, 0.95);
+    padding: 0;
+    background-color: transparent;
   }
 
   .schematic-frame::before {
     content: "";
     position: absolute;
-    inset: 8px;
+    inset: 6px;
     border: 1.5px solid #000000;
-    pointer-events: none;
-  }
-
-  /* Corner bracket marks for schematic feel */
-  .schematic-frame::after {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    border: 1px solid #000000;
     pointer-events: none;
   }
 
   .schematic-inner {
     position: relative;
-    padding: 20px 24px;
+    padding: 24px 28px;
     min-height: 500px;
   }
 
-  /* Grid reference labels (A, B, C... and 1, 2, 3...) */
+  /* Grid reference labels (inside borders) */
   .schematic-grid-labels {
     position: absolute;
     font-family: "IBM Plex Mono", monospace;
     font-size: 9px;
     color: #666666;
     pointer-events: none;
+    z-index: 10;
   }
 
   .schematic-grid-labels.top {
-    top: -18px;
-    left: 0;
-    right: 0;
+    top: 10px;
+    left: 40px;
+    right: 40px;
     display: flex;
     justify-content: space-around;
   }
 
   .schematic-grid-labels.bottom {
-    bottom: -18px;
-    left: 0;
-    right: 0;
+    bottom: 10px;
+    left: 40px;
+    right: 180px;
     display: flex;
     justify-content: space-around;
   }
 
   .schematic-grid-labels.left {
-    top: 0;
-    left: -20px;
-    bottom: 0;
+    top: 40px;
+    left: 10px;
+    bottom: 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
   }
 
   .schematic-grid-labels.right {
-    top: 0;
-    right: -20px;
-    bottom: 0;
+    top: 40px;
+    right: 10px;
+    bottom: 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
   }
 
-  /* Title block (bottom-right info box - KiCad style) */
+  /* Title block container - attached to bottom-right corner */
+  .title-block-container {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    z-index: 5;
+  }
+
+  /* Title block (bottom-right info box - EasyEDA/KiCad style) */
   .title-block {
     border: 1.5px solid #000000;
     font-family: "IBM Plex Mono", monospace;
-    background-color: #ffffff;
+    background-color: transparent;
+    width: 280px;
   }
 
   .title-block-row {
     display: flex;
     border-top: 1px solid #000000;
+    min-height: 22px;
   }
 
   .title-block-row:first-child {
     border-top: none;
   }
 
-  .title-block-row.double-height {
-    min-height: 32px;
+  .title-block-row.brick-layout {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
   }
 
-  .title-block-label {
+  .brick-cell {
+    display: flex;
+    align-items: center;
+    padding: 3px 5px;
+    font-size: 8px;
     border-right: 1px solid #000000;
-    padding: 4px 6px;
-    font-size: 9px;
+  }
+
+  .brick-cell:last-child {
+    border-right: none;
+  }
+
+  .brick-cell.label {
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: #555555;
     white-space: nowrap;
-    display: flex;
-    align-items: center;
+    justify-content: center;
   }
 
-  .title-block-value {
-    padding: 4px 8px;
-    font-size: 10px;
+  .brick-cell.value {
     font-weight: 500;
     color: #000000;
-    flex: 1;
-    display: flex;
-    align-items: center;
+  }
+
+  .brick-cell.value.wide {
+    grid-column: span 2;
   }
 
   /* Main title area in title block */
-  .title-block-main {
-    border: 1.5px solid #000000;
-    font-family: "IBM Plex Mono", monospace;
-    background-color: #ffffff;
-  }
-
-  .title-block-main-title {
-    font-size: 14px;
+  .title-block-main-title-full {
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: #000000;
-    padding: 6px 10px;
+    padding: 5px 8px;
     border-bottom: 1.5px solid #000000;
+    width: 100%;
   }
 
-  .title-block-main-subtitle {
-    font-size: 10px;
+  .title-block-main-subtitle-full {
+    font-size: 9px;
     color: #666666;
-    padding: 3px 10px;
+    padding: 3px 8px;
+    border-bottom: 1px solid #000000;
+    width: 100%;
   }
 
   .link-button {
